@@ -1,0 +1,40 @@
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db_data:
+
+services:
+  db:
+    container_name: todoapp_db
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=superpass
+      - MYSQL_DATABASE=todos
+    expose:
+      - 3306
+    networks:
+      backend:
+       aliases:
+         - "mysql01"
+      
+  webapp:
+    container_name: todoapp_app
+    image: tema4lab:v1.0
+    build: .
+    ports:
+      - 8081:3000
+    restart: always
+    environment:
+      - MYSQL_HOST=mysql01
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=superpass
+      - MYSQL_DB=todos
+      - CN=ACME
+    networks:
+      - frontend
+      - backend

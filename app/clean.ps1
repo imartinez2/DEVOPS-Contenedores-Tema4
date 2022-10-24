@@ -18,3 +18,5 @@ docker rmi mysql:5.7
 
 #Eliminar la red de la aplicación
 docker network rm todo-app
+
+docker volume remove todo-mysql-data
