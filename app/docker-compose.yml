@@ -38,3 +38,5 @@ services:
     networks:
       - frontend
       - backend
+    depends_on:
+      - db
